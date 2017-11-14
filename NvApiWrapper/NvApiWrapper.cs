@@ -107,7 +107,9 @@ namespace NvApiWrapper
         public uint Count;
         [MarshalAs(UnmanagedType.ByValArray,
           SizeConst = NVAPI.MAX_THERMAL_SENSORS_PER_GPU)]
-        public NvSensor[] Sensor;
+        public NvSensor[] Sensors;
+
+        public int CurrentTemp => (int) (Sensors[0].CurrentTemp);
     }
 
     [StructLayout(LayoutKind.Sequential)]
