@@ -157,6 +157,9 @@ namespace NvApiWrapper
         public uint Flags;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NVAPI.MAX_PSTATES_PER_GPU)]
         public NvPState[] PStates;
+
+        public int GpuUsage => (int)(PStates[0].Percentage );
+        public int GpuPower => (int)(PStates[1].Percentage );
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
