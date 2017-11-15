@@ -136,12 +136,7 @@ namespace NvApiWrapper
         public int MemoryClock => (int)(Clocks[4].Frequency / 1000);
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 8)]
-    public struct NvPState
-    {
-        public bool Present;
-        public int Percentage;
-    }
+   
 
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
     public struct NvClock
@@ -160,6 +155,13 @@ namespace NvApiWrapper
 
         public int GpuUsage => (int)(PStates[0].Percentage );
         public int GpuPower => (int)(PStates[1].Percentage );
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 8)]
+    public struct NvPState
+    {
+        public bool Present;
+        public int Percentage;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
@@ -263,8 +265,7 @@ namespace NvApiWrapper
         public delegate NvStatus NvAPI_GPU_GetAllClocksDelegate(NvPhysicalGpuHandle gpuHandle, ref NvClocks nvClocks);
         public delegate NvStatus NvAPI_GPU_GetPStatesDelegate(
           NvPhysicalGpuHandle gpuHandle, ref NvPStates nvPStates);
-        public delegate NvStatus NvAPI_GPU_GetUsagesDelegate(
-          NvPhysicalGpuHandle gpuHandle, ref NvUsages nvUsages);
+        
         public delegate NvStatus NvAPI_GPU_GetCoolerSettingsDelegate(
           NvPhysicalGpuHandle gpuHandle, int coolerIndex,
           ref NvGPUCoolerSettings nvGPUCoolerSettings);
@@ -295,8 +296,7 @@ namespace NvApiWrapper
         public static readonly NvAPI_GPU_GetAllClocksDelegate NvAPI_GPU_GetAllClocks;
         public static readonly NvAPI_GPU_GetPStatesDelegate
           NvAPI_GPU_GetPStates;
-        public static readonly NvAPI_GPU_GetUsagesDelegate
-          NvAPI_GPU_GetUsages;
+        
         public static readonly NvAPI_GPU_GetCoolerSettingsDelegate
           NvAPI_GPU_GetCoolerSettings;
         public static readonly NvAPI_GPU_GetMemoryInfoDelegate
@@ -371,7 +371,6 @@ namespace NvApiWrapper
                 GetDelegate((uint)FunctionId.NvAPI_GPU_GetTachReading, out NvAPI_GPU_GetTachReading);
                 GetDelegate((uint)FunctionId.NvAPI_GPU_GetAllClockFrequencies, out NvAPI_GPU_GetAllClocks);
                 GetDelegate((uint)FunctionId.NvAPI_GPU_GetDynamicPStatesInfoEx, out NvAPI_GPU_GetPStates);
-               // GetDelegate(0x189A1FDF, out NvAPI_GPU_GetUsages);
                // GetDelegate(0xDA141340, out NvAPI_GPU_GetCoolerSettings);
                 GetDelegate((uint)FunctionId.NvAPI_GPU_GetMemoryInfo, out NvAPI_GPU_GetMemoryInfo);
                 GetDelegate((uint)FunctionId.NvAPI_GetDisplayDriverVersion, out NvAPI_GetDisplayDriverVersion);
